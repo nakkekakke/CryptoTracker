@@ -5,23 +5,18 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -53,10 +48,6 @@ public class CryptoServiceTest {
         this.testFolio = new Portfolio(54, testUser);
         this.testCrypto = new Cryptocurrency(12, "testCryptoName", testFolio);
         this.testBatch = new CryptoBatch(555, 10, 20, LocalDate.now(), testCrypto);
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test
