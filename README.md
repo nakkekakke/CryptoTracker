@@ -1,6 +1,6 @@
 # CryptoTracker
 
-Tämä sovellus on harjoitustyö kurssille Ohjelmistotekniikan menetelmät. Sovellukseen voi luoda oman portfolion, johon käyttäjä voi tallentaa tiedot omista kryptovaluuttasijoituksistaan. Näin käyttäjä voi seurata eri kryptovaluuttasijoituksiaan helposti ja nopeasti. **Sovellus on vielä keskeneräinen ja uusia toimintoja lisätään.** Sovellus on englanninkielinen.
+Tämä sovellus on harjoitustyö kurssille Ohjelmistotekniikan menetelmät. Sovellukseen voi luoda oman portfolion, johon käyttäjä voi tallentaa tiedot omista kryptovaluuttasijoituksistaan. Näin käyttäjä voi seurata eri kryptovaluuttasijoituksiaan helposti ja nopeasti. Sovellus on englanninkielinen.
 
 ## Dokumentaatio
 
@@ -11,6 +11,8 @@ Tämä sovellus on harjoitustyö kurssille Ohjelmistotekniikan menetelmät. Sove
 [Arkkitehtuurikuvaus](https://github.com/nakkekakke/CryptoTracker/blob/master/dokumentointi/arkkitehtuuri.md)
 
 [Käyttöohje](https://github.com/nakkekakke/CryptoTracker/blob/master/dokumentointi/kayttoohje.md)
+
+[Testausdokumentti](https://github.com/nakkekakke/CryptoTracker/blob/master/dokumentointi/testaus.md)
 
 ## Komentorivitoiminnot
 
@@ -69,3 +71,5 @@ JavaDocia voi tarkastella avaamalla selaimella tiedosto _target/site/apidocs/ind
 [Viikko 5](https://github.com/nakkekakke/CryptoTracker/releases/tag/v0.1)
 
 [Viikko 6](https://github.com/nakkekakke/CryptoTracker/releases/tag/v0.2)
+
+[Loppupalautus](https://github.com/nakkekakke/CryptoTracker/releases/tag/v1.0)
