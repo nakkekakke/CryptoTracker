@@ -6,6 +6,7 @@ import java.time.format.DateTimeParseException;
 
 public class InputChecker {
     
+    
     public boolean isInteger(String string) {
         if (string.length() < 1) {
             return false;
