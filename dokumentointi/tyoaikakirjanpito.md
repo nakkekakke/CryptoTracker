@@ -25,4 +25,5 @@
 | 2.5.  | 7 h  | Javadoc, arkkitehtuurikuvaus, käyttöohje |
 | 4.5.  | 1 h  | Testejä |
 | 9.5.  | 5 h  | Lisää testejä, pientä refaktorointia |
-| yht.  | 83 h |  | 
+| 11.5. | 8 h  | Refaktorointia, loppupalautukseen vaadittava dokumentaatio |
+| yht.  | 88 h |  | 
