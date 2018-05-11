@@ -2,7 +2,7 @@
 
 ## Ohjelman rakenne
 
-Ohjelman rakenne koostuu kolmesta peruskerroksesta, joita ovat **käyttöliittymä**, **sovelluslogiikka** ja **pysyväistalletus**. Ohjelman koodissa näitä kerroksia vastaavat pakkaukset **ui**, **domain** ja **dao**.
+Ohjelman rakenne koostuu kolmesta peruskerroksesta, joita ovat **[käyttöliittymä](https://github.com/nakkekakke/CryptoTracker/blob/master/dokumentointi/arkkitehtuuri.md#käyttöliittymä)**, **[sovelluslogiikka](https://github.com/nakkekakke/CryptoTracker/blob/master/dokumentointi/arkkitehtuuri.md#sovelluslogiikka)** ja **[pysyväistallennus](https://github.com/nakkekakke/CryptoTracker/blob/master/dokumentointi/arkkitehtuuri.md#pysyväistallennus)**. Ohjelman koodissa näitä kerroksia vastaavat pakkaukset **ui**, **domain** ja **dao**.
 
 Alla oleva luokka-/pakkauskaavio kuvaa sovelluksen eri osien suhteita toisiinsa. Sovelluslogiikasta vastaava CryptoService-luokka käyttää kaikkia domain-pakkauksen luokkia sisäänkirjautuneen käyttäjän (User) kautta.
 
@@ -21,7 +21,7 @@ Käyttöliittymässä on neljä eri näkymää
 - kryptovaluutan ostoerälista
 Jokainen näistä näkymästä on toteutettu sovelluksessa omana [Scene](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/Scene.html)-olionaan. Ohjelmassa näkyy kerrallaan vain yksi ikkuna ([Stage](https://docs.oracle.com/javase/8/javafx/api/javafx/stage/Stage.html)), johon näytettävä näkymä (Scene) sijoitetaan. Käyttöliittymä rakennetaan luokassa [cryptotracker.ui.CryptoUI](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/ui/CryptoUI.java).
 
-Käyttöliittymä on pyritty eristämään sovelluslogiikasta, joten se vain kutsuu sovelluslogiikkaluokan olion metodeja kun käyttäjä tekee jotain sovelluksessa.
+Käyttöliittymä on pyritty eristämään sovelluslogiikasta, joten se vain kutsuu sovelluslogiikkaluokan ja -luokan olion metodeja kun käyttäjä tekee jotain sovelluksessa.
 
 ## Sovelluslogiikka
 Vastaava pakkaus [cryptotracker.domain](https://github.com/nakkekakke/CryptoTracker/tree/master/src/main/java/cryptotracker/domain).
@@ -34,7 +34,7 @@ Ohjelmassa tapahtuvat toiminnalliset kokonaisuudet kuuluvat luokan [CryptoServic
 - CryptoBatch createCrypto(String name, int amount, int totalPaid, LocalDate date)
 - void deleteBatch(int id)
 
-_CryptoService_ tallentaa ja hakee dataa pysyväistalletuksesta vastaavassa pakkauksessa _cryptotracker.dao_ olevien, Dao-rajapinnan toteuttavien luokkien kautta. Jokaista dao-oliota on vain yksi kappale, ja ne injektoidaan _CryptoService_-oliolle [konstruktorissa](https://github.com/nakkekakke/CryptoTracker/blob/82215b1097a1064cfb681fcdb84f21cdc785bf2c/src/main/java/cryptotracker/domain/CryptoService.java#L24).
+_CryptoService_ tallentaa ja hakee dataa pysyväistalletuksesta vastaavassa pakkauksessa _cryptotracker.dao_ olevien, Dao-rajapinnan toteuttavien luokkien kautta. Jokaista dao-oliota on vain yksi kappale, ja ne injektoidaan _CryptoService_-oliolle [konstruktorissa](https://github.com/nakkekakke/CryptoTracker/blob/82215b1097a1064cfb681fcdb84f21cdc785bf2c/src/main/java/cryptotracker/domain/CryptoService.java#L24). Lisäksi, kun kryptovaluuttoja lisättäessä halutaan tarkistaa käyttäjän syöttämien syötteien kelvollisuus, turvaudutaan luokan [InputChecker](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/domain/InputChecker.java) ainoan olion metodeihin. Näitä metodeja kutsutaan suoraan käyttöliittymästä.
 
 ## Pysyväistallennus
 Vastaava pakkaus [cryptotracker.dao](https://github.com/nakkekakke/CryptoTracker/tree/master/src/main/java/cryptotracker/dao).
