@@ -1,5 +1,14 @@
 # Käyttöohje
 
+Lataa tiedostot [CryptoTracker.jar ja config.properties](https://github.com/mluukkai/OtmTodoApp/releases/tag/0.1). Pidä huoli, että molemmat tiedostot ovat samassa kansiossa!
+
+## Konfigurointi
+
+Ohjelma olettaa, että sen suoritushakemistossa on konfiguraatiotiedosto _config.properties_, joka määrittelee tietokannan sijainnin. Jos tietokantaa ei ole, ohjelma luo sellaisen. Tiedosto sisältää seuraavan rivin tekstiä
+
+```
+databaseAddress=cryptotracker.db
+```
 
 ## Rekisteröityminen ja sisäänkirjautuminen
 
