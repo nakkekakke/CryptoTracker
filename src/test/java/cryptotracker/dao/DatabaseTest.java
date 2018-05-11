@@ -18,7 +18,6 @@ public class DatabaseTest {
     public void setUp() throws ClassNotFoundException, SQLException {
         this.testFile = new File("db/databaseTest.db");
         initializeDatabase(testFile.getPath());
-        
     }
 
     @After
@@ -39,21 +38,6 @@ public class DatabaseTest {
     @Test
     public void initializeTablesWorks() throws SQLException {
         database.initializeTables();
-//        PreparedStatement stat = conn.prepareStatement(".schema CryptoBatch");
-//        ResultSet rs = stat.executeQuery();
-//        assertTrue(rs.next());
-//        
-//        stat = conn.prepareStatement(".schema Cryptocurrency");
-//        rs = stat.executeQuery();
-//        assertTrue(rs.next());
-//        
-//        stat = conn.prepareStatement(".schema Portfolio");
-//        rs = stat.executeQuery();
-//        assertTrue(rs.next());
-//        
-//        stat = conn.prepareStatement(".schema User");
-//        rs = stat.executeQuery();
-//        assertTrue(rs.next());
     }
 
 }

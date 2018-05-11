@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-/* The DAO interface for communication with the database
+/* The DAO interface that abstracts other DAO interfaces
  *
  */
 public interface Dao<T, K> {

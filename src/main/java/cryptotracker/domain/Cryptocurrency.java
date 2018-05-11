@@ -2,6 +2,7 @@ package cryptotracker.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 /** The class describing a cryptocurrency in a portfolio
@@ -44,6 +45,14 @@ public class Cryptocurrency {
         }
         Cryptocurrency other = (Cryptocurrency) object;
         return this.name.equals(other.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + this.id;
+        hash = 67 * hash + Objects.hashCode(this.name);
+        return hash;
     }
     
 }

@@ -142,7 +142,11 @@ public class CryptoService {
         return true;
     }
     
-    
+    /** Finds out if an user is already stored in the application
+     * 
+     * @param user The user who will be looked for
+     * @return The found user, or null if nothing was found
+     */
     public User findUser(User user) {
         User foundUser;
         
@@ -189,6 +193,11 @@ public class CryptoService {
         return true;
     }
     
+    /** Finds the portfolio of an user, stored in the application
+     * 
+     * @param user The user whose portfolio will be looked for
+     * @return The found portfolio, null if nothing was found
+     */
     public Portfolio findPortfolio(User user) {
         
         try {
@@ -216,6 +225,11 @@ public class CryptoService {
         }
     }
     
+    /** Deletes a cryptocurrency and all of its CryptoBatches from the active portfolio
+     * 
+     * @param crypto The cryptocurrency which will be deleted
+     * @return True if deletion was successful, false if an error occurred
+     */
     public boolean deleteCryptocurrency(Cryptocurrency crypto) {
         for (Cryptocurrency c : getCryptosInPortfolio()) {
             if (c.equals(crypto)) {
@@ -233,6 +247,10 @@ public class CryptoService {
         return false;
     }
     
+    /** Finds all cryptocurrencies in the currently active portfolio
+     * 
+     * @return A list of cryptocurrencies found in the portfolio, or null if an error occurred
+     */
     public List<Cryptocurrency> getCryptosInPortfolio() {
         try {
             return cryptoDao.findAllInPortfolio(getActivePortfolio());
@@ -255,7 +273,14 @@ public class CryptoService {
     // CRYPTOBATCH
     //
     
-    
+    /** Creates a new batch of cryptocurrency. Also creates a new cryptocurrency instance if there is no cryptocurrency with the same name.
+     * 
+     * @param name The name of the cryptocurrency
+     * @param amount The amount of cryptocurrency in the batch
+     * @param totalPaid The value of the batch
+     * @param date The purchase date of the batch
+     * @return 
+     */
     public CryptoBatch createCrypto(String name, int amount, int totalPaid, LocalDate date) {
         Cryptocurrency crypto = findCryptoByName(name);
         if (crypto == null) {
@@ -274,6 +299,11 @@ public class CryptoService {
         }
     }
     
+    /** Finds all batches of a cryptocurrency in the active portfolio
+     * 
+     * @param crypto The cryptocurrency whose batches will be looked for
+     * @return A list of CryptoBatches found; an empty list if nothing was found
+     */
     public List<CryptoBatch> getBatchesOfCrypto(Cryptocurrency crypto) {
         List<CryptoBatch> batches = new ArrayList<>();
         try {
@@ -290,11 +320,15 @@ public class CryptoService {
         });
     }
     
+    /** Deletes a CryptoBatch, specified by an id
+     * 
+     * @param id The id of the CryptoBatch that will be deleted
+     */
     public void deleteBatch(Integer id) {
         try {
             batchDao.delete(id);
         } catch (SQLException e) {
-            e.getStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }

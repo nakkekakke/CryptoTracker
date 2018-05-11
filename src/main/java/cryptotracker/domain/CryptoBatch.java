@@ -17,7 +17,7 @@ public class CryptoBatch {
     public CryptoBatch(int id, int amount, int totalPaid, LocalDate date, Cryptocurrency crypto) {
         this.id = id;
         this.amount = amount;
-        this.totalPaid = totalPaid; // in euro cents, for example
+        this.totalPaid = totalPaid;
         this.date = date;
         this.crypto = crypto;
     }
@@ -54,5 +54,12 @@ public class CryptoBatch {
         
         CryptoBatch other = (CryptoBatch) object;
         return this.id == other.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + this.id;
+        return hash;
     }
 }

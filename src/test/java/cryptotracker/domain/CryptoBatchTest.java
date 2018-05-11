@@ -71,5 +71,13 @@ public class CryptoBatchTest {
         Object o = new String();
         assertFalse(testBatch.equals(o));
     }
+    
+    @Test
+    public void hashCodeTest() {
+        CryptoBatch anotherBatch = new CryptoBatch(1, 1, 1, LocalDate.now(), assistanceCrypto);
+        int hash = 586;
+        assertEquals(testBatch.hashCode(), hash);
+        assertNotEquals(anotherBatch.hashCode(), hash);
+    }
 
 }

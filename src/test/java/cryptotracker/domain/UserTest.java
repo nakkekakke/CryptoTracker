@@ -1,9 +1,6 @@
 package cryptotracker.domain;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -55,6 +52,8 @@ public class UserTest {
     @Test
     public void hashCodeTest() {
         User user = new User(1, "test");
-        assertEquals(user.hashCode(), 3560224);
+        int hash = 3560224;
+        assertEquals(user.hashCode(), hash);
+        assertNotEquals(testUser.hashCode(), hash);
     }
 }

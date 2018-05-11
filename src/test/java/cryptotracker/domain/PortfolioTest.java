@@ -48,8 +48,10 @@ public class PortfolioTest {
     
     @Test
     public void hashCodeTest() {
-        Portfolio portfolio = new Portfolio(1, assistanceUser);
-        assertEquals(portfolio.hashCode(), -265689387);
+        Portfolio portfolio = new Portfolio(10, assistanceUser);
+        int hash = -265688910;
+        assertEquals(portfolio.hashCode(), hash);
+        assertNotEquals(testPortfolio.hashCode(), hash);
     }
 
 }

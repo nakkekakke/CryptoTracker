@@ -45,5 +45,13 @@ public class CryptocurrencyTest {
         Object o = new String();
         assertFalse(testCrypto.equals(o));
     }
+    
+    @Test
+    public void hashCodeTest() {
+        Cryptocurrency anotherCrypto = new Cryptocurrency(1, "something", assistancePortfolio);
+        int hash = -1082608455;
+        assertEquals(testCrypto.hashCode(), hash);
+        assertNotEquals(anotherCrypto.hashCode(), hash);
+    }
 
 }
