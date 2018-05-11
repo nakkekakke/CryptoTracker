@@ -6,7 +6,7 @@ Ohjelman rakenne koostuu kolmesta peruskerroksesta, joita ovat **käyttöliittym
 
 Alla oleva luokka-/pakkauskaavio kuvaa sovelluksen eri osien suhteita toisiinsa. Sovelluslogiikasta vastaava CryptoService-luokka käyttää kaikkia domain-pakkauksen luokkia sisäänkirjautuneen käyttäjän (User) kautta.
 
-<img src="https://raw.githubusercontent.com/nakkekakke/CryptoTracker/master/dokumentointi/kuvat/Luokkapakkausdiagrammi.png">
+<img src="https://raw.githubusercontent.com/nakkekakke/CryptoTracker/master/dokumentointi/kuvat/luokkapakkausdiagrammi.png">
 
 Tarkastellaan seuraavaksi kunkin kerroksen toimintaa ja rakennetta vielä tarkemmin.
 
@@ -39,7 +39,7 @@ _CryptoService_ tallentaa ja hakee dataa pysyväistalletuksesta vastaavassa pakk
 ## Pysyväistallennus
 Vastaava pakkaus [cryptotracker.dao](https://github.com/nakkekakke/CryptoTracker/tree/master/src/main/java/cryptotracker/dao).
 
-Luokkien [UserDao](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/dao/UserDao.java), [PortfolioDao](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/dao/CryptocurrencyDao.java), [CryptocurrencyDao](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/dao/PortfolioDao.java) ja [CryptoBatchDao](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/dao/CryptoBatchDao.java) oliot vastaavat datan tallentamisesta tietokantaan ja datan hakemisesta tietokannasta. Näitä olioita on ohjelmassa vain yksi jokaista. Nämä luokat noudattavat [DAO-mallia](https://en.wikipedia.org/wiki/Data_access_object), minkä takia tietokantatallennus voitaisiin suhteellisen helposti vaihtaa johonkin toiseen talletusmuotoon; tämä tosin vaatisi muutoksia kaikkiin dao-luokkiin.
+Luokkien [DBUserDao](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/dao/DBUserDao.java), [DBPortfolioDao](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/dao/DBPortfolioDao.java), [DBCryptocurrencyDao](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/dao/DBCryptocurrencyDao.java) ja [DBCryptoBatchDao](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/dao/DBCryptoBatchDao.java) oliot vastaavat datan tallentamisesta tietokantaan ja datan hakemisesta tietokannasta. Näitä olioita on ohjelmassa vain yksi jokaista. Nämä luokat noudattavat [DAO-mallia](https://en.wikipedia.org/wiki/Data_access_object), minkä takia tietokantatallennus voitaisiin vaihtaa johonkin toiseen talletusmuotoon koskematta pahemmin ohjelman muuhun koodiin. Edellä luetellut DAO-luokat onkin eristetty rajapintojen [UserDao](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/dao/UserDao.java), [PortfolioDao](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/dao/PortfolioDao.java), [CryptocurrencyDao](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/dao/CryptocurrencyDao.java) ja [CryptoBatchDao](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/dao/CryptoBatchDao.java) taakse, ja sovelluslogiikka käyttää luokkia näiden abstraktioiden kautta. Nämäkin abstraktiot on vielä yleistetty niin, että jokainen perii yleisen [Dao](https://github.com/nakkekakke/CryptoTracker/blob/master/src/main/java/cryptotracker/dao/Dao.java)-rajapinnan.
 
 ### Tietokanta
 
@@ -55,10 +55,33 @@ Kuvataan ohjelman keskeisimpiä toimintoja ja niiden suoritusta sekvenssikaavioi
 
 ### Sisäänkirjautuminen
 
-Sisäänkirjautuminen tapahtuu ohjelman aloitusnäkymässä. Ohjelman käyttäjä voi kirjautua sisään, kun hän syöttää aloitusnäkymässä olevaan tekstikenttään käyttäjänimensä ja painaa "Login"-näppäintä.
+Sisäänkirjautuminen tapahtuu ohjelman aloitusnäkymässä. Käyttäjä voi kirjautua sisään syöttämällä aloitusnäkymän tekstikenttään oman käyttäjänimensä ja painaa "Login"-näppäintä.
 
 <img src="https://raw.githubusercontent.com/nakkekakke/CryptoTracker/master/dokumentointi/kuvat/sekvenssikaavio_login.png">
 
 Tapahtumakäsittelijä kutsuu sovelluslogiikasta vastaavan luokan _CryptoService_ metodia [login](https://github.com/nakkekakke/CryptoTracker/blob/5eec2a01380550264e897e71b4b0ec71380c8977/src/main/java/cryptotracker/domain/CryptoService.java#L88) parametrinaan käyttäjän syöttämä käyttäjänimi. Luokan _UserDao_ avulla selvitetään, onko kyseisellä käyttäjänimellä rekisteröidytty sovellukseen. Tietokantakysely tuottaa lopulta vastauksen; jos saatu ResultSet on epätyhjä, niin käyttäjä löytyi. Tällöin metodi login palauttaa arvon true, jolloin sovelluslogiikka kirjaa käyttäjän sisään. Lopulta käyttäjä siirretään uuteen näkymään.
 
+<br>
+Tietokantakyselyt noudattavat samaa periaatetta myös muiden operaatioiden kohdalla (luodaan Connection ja Statement, sekä tietoa haettaessa tutkitaan ResultSettiä), joten seuraavia sekvenssikaavioita on yksinkertaistettu piilottamalla kyselyt.
 
+### Rekisteröityminen
+
+Rekisteröityminen tapahtuu sisäänkirjautumisen tapaan ohjelman aloitusnäkymässä. Ohjelman käyttäjä voi rekisteröidä tunnuksen sovellukseen syöttämällä aloitusnäkymässä olevaan tekstikenttään haluamansa käyttäjänimen ja painamalla "Register"-näppäintä. 
+
+<img src="https://raw.githubusercontent.com/nakkekakke/CryptoTracker/master/dokumentointi/kuvat/sekvenssikaavio_registering.png">
+
+"Register"-napin tapahtumakäsittelijä kutsuu _CryptoServicen_ metodia [createUser](https://github.com/nakkekakke/CryptoTracker/blob/51198c571e7368dce51192cad83a6d2699e4cfc5/src/main/java/cryptotracker/domain/CryptoService.java#L127), parametrina käyttäjän tekstikenttään syöttämä käyttäjänimi. Luokan _UserDao_ avulla selvitetään, onko kyseinen käyttäjänimi jo varattu. Jos ei, luodaan uusi tunnus sekvenssikaavion mukaisesti. Lopulta käyttäjälle ilmoitetaan onnistuneesta rekisteröitymisestä.
+
+### Kryptovaluutan lisääminen
+
+Kryptovaluuttojen lisääminen lisätä portfolioon tapahtuu sille varatussa näkymässä painamalla sisäänkirjautumisen jälkeen portfolionäkymässä nappia "Add Crypto". Tässä näkymässä kryptovaluutan lisääminen onnistuu täyttämällä tekstikenttiin kryptovaluutan nimi, määrä, hinta ja ostopäivämäärä, ja painamalla tämän lopuksi nappia "Add crypto".
+
+<img src="https://raw.githubusercontent.com/nakkekakke/CryptoTracker/master/dokumentointi/kuvat/sekvenssikaavio_addcrypto.png">
+
+Kryptovaluutan lisäysnäkymässä olevan "Add crypto"-napin tapahtumakäsittelijä kutsuu _CryptoServicen_ metodia [createCrypto](https://github.com/nakkekakke/CryptoTracker/blob/51198c571e7368dce51192cad83a6d2699e4cfc5/src/main/java/cryptotracker/domain/CryptoService.java#L259) antaen parametriksi kryptovaluutan nimen, määrän, hinnan ja ostopäivämäärän. Aluksi selvitetään luokan _CryptocurrencyDao_ avulla, onko portfoliossa jo valmiiksi samaa kryptovaluuttaa. Jos ei, luodaan portfoliolle uusi kryptovaluuttainstanssi, sekä lisätään tähän juuri luotuun instanssiin uusi kryptovaluutan ostoerä (CryptoBatch). Tämä skenaario on kuvattu yllä olevassa sekvenssikaaviossa. Jos portfoliossa kuitenkin olisi jo lisättävää kryptovaluuttaa, ei uutta instanssia luotaisi vaan olemassa olevalle kryptovaluutalle lisättäisiin vain uusi ostoerä.
+
+## Ohjelmaan jääneet rakenteelliset heikkoudet
+
+### DAO-luokat
+
+Monet sovelluksessa olevat, eri DAO-luokkien metodit ovat hyvin samanlaisia. Näitä metodeja olisi voinut abstraktoida paremmin, esimerkiksi luomalla yleiskäyttöisiä SQL-metodeja. Tämä jäi tekemättä, koska en osannut tehdä tällaista ilman, että siihen menisi hirveästi aikaa.
